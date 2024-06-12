@@ -123,13 +123,14 @@ const initializeWriterDatabase = async () => {
     try {
         await db.writer.database.authenticate();
         if (config.ENV === 'development') {
-            await db.writer.database.sync({ ater: true });
+            await db.writer.database.sync({ alter: true });
         }
         logger.info('Writer database connection has been established successfully.');
     } catch (error) {
         logger.error('Unable to connect to the database:', error);
     }
 }
+
 
 const initializeReaderDatabase = async () => {
     try {
