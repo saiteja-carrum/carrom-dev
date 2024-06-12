@@ -3,6 +3,7 @@ const router = express.Router()
 
 const logger = require("../../../logger/logger")
 const healthCheckService = require("../service/healthCheckService")
+const authorize = require('../../../../middlewares/authorization/auth');
 
 module.exports = () => {
 
@@ -19,7 +20,7 @@ module.exports = () => {
         }
     })
 
-    router.post('/', async (req, res, next) => {
+    router.post('/',authorize, async (req, res, next) => {
         try {
             const record = await healthCheckService.createHealthCheckRecord(req.body);
             res.json(record)
@@ -29,7 +30,7 @@ module.exports = () => {
         }
     })
 
-    router.put('/:id', async (req, res, next) => {
+    router.put('/:id',authorize, async (req, res, next) => {
         try {
             var id = req.params['id'] 
             var data = req.body;
@@ -42,7 +43,7 @@ module.exports = () => {
         }
     })
 
-    router.get('/getStatusFromDB/:id', async (req, res, next) => {
+    router.get('/getStatusFromDB/:id',authorize, async (req, res, next) => {
         try {
             const record = await healthCheckService.getHealthCheckRecordById(req.params['id']);
             res.json(record)
@@ -52,7 +53,7 @@ module.exports = () => {
         }
     })
 
-    router.get('/getAllStatusFromDB', async (req, res, next) => {
+    router.get('/getAllStatusFromDB',authorize, async (req, res, next) => {
         try {
             const records = await healthCheckService.getAllHealthCheckRecords();
             res.json(records)
