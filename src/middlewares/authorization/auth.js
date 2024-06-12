@@ -1,9 +1,8 @@
-
 const logger = require('../../app/logger/logger');
 
 const authorize = (req, res, next) => {
     try {
-        const userRole = req.headers['user-role'];
+        const userRole = req.headers['role'];
         if (userRole === 'super admin' || userRole === 'admin') {
             return next();
         }
